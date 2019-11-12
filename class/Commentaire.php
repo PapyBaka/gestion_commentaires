@@ -4,7 +4,7 @@ class Commentaire
 {
     private $id;
     private $contenu;
-    private $label;
+    private $labels;
     private $valide;
     private $koFirst;
     private $koSecond;
@@ -20,7 +20,11 @@ class Commentaire
     }
 
     public function formatedComment(): string {
-        return str_replace($this->getLabel(),"<mark><u>{$this->getLabel()}</u></mark>",$this->getContenu());
+        $contenu = $this->getContenu();
+        foreach($this->labels as $label) {
+            $contenu = str_replace($label,"<mark><u>{$label}</u></mark>",$contenu);
+        }
+        return $contenu;
     }
 
     /* GETTER */
@@ -32,8 +36,8 @@ class Commentaire
         return $this->contenu;
     }
 
-    public function getLabel() {
-        return $this->label;
+    public function getLabels() {
+        return $this->labels;
     }
 
     public function getValide() {
@@ -63,9 +67,11 @@ class Commentaire
         }
     }
 
-    public function setLabel(string $label) {
-        if (strlen($label) > 0) {
-            $this->label = $label;
+    public function setLabels(?array $labels = []) {
+        foreach ($labels as $label){
+            if (strlen($label) > 0) {
+                $this->labels[] = $label;
+            }
         }
     }
 
@@ -73,5 +79,12 @@ class Commentaire
         $this->valide = (int)$valide;
     }
 
+    public function setKoFirst($koFirst) {
+        $this->koFirst = (int)$koFirst;
+    }
+
+    public function setKoSecond($koSecond) {
+        $this->koSecond = (int)$koSecond;
+    }
     
 }

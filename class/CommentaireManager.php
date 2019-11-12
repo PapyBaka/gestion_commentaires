@@ -14,26 +14,27 @@ class CommentaireManager
     }
 
     public function getById($id) {
-        $query = $this->db->query("SELECT id, contenu, valide, ko_1 as koFirst, ko_2 as koSecond FROM commentaires WHERE id = ".$id);
+        $query = $this->db->query("SELECT id, contenu, valide, ko_1 as koFirst, ko_2 as koSecond FROM commentaires WHERE id = $id");
         $result = $query->fetch(PDO::FETCH_ASSOC);
         return $result;
     }
-/* 
-    public function changeValidateStatus(Commentaire $commentaire): bool {
-        $valide = $commentaire->getValide() == true ? 0 : 1;
-        $query = $this->db->prepare("UPDATE commentaires SET valide = :valide WHERE id = :id");
-        $result = $query->execute([
-            "valide" => $valide,
-            "id" => $commentaire->getId()
-        ]);
-        return $result;
-    } */
+
+    public function getLabels($id) {
+        $query = $this->db->query("SELECT label FROM labels WHERE id_comment = $id");
+        $results = $query->fetchAll();
+        foreach($results as $result){
+            $labels[] = $result['label'];
+        }
+        return $labels;
+    }
 
     public function update(Commentaire $commentaire) {
-        $query = $this->db->prepare("UPDATE commentaires SET valide = :valide WHERE id = :id");
+        $query = $this->db->prepare("UPDATE commentaires SET valide = :valide, ko_1 = :koFirst, ko_2 = :koSecond WHERE id = :id");
         $result = $query->execute([
             "valide" => $commentaire->getValide(),
-            "id" => $commentaire->getId()
+            "id" => $commentaire->getId(),
+            "koFirst" => $commentaire->getKoFirst(),
+            "koSecond" => $commentaire->getKoSecond()
         ]);
         return $result;
     }

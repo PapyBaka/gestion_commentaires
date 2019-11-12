@@ -1,0 +1,17 @@
+{
+    "name": "zedli/gestion_commentaires",
+    "authors": [
+        {
+            "name": "Florian",
+            "email": "florian.fp.perrier@gmail.com"
+        }
+    ],
+    "require": {
+        "symfony/var-dumper": "^4.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\" : "class/"
+        }
+    }
+}
