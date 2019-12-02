@@ -1,5 +1,7 @@
 <?php
 
+namespace App;
+
 class Commentaire
 {
     private $id;
@@ -29,7 +31,7 @@ class Commentaire
 
     /* GETTER */
     public function getId() {
-        return (int)$this->id;
+        return $this->id;
     }
 
     public function getContenu() {
@@ -58,7 +60,7 @@ class Commentaire
 
     /* SETTER */
     public function setId($id) {
-        $this->id = (int)$id;
+        $this->id = $id;
     }
 
     public function setContenu(string $contenu) {

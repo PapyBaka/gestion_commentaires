@@ -1,5 +1,9 @@
 <?php
 
+namespace App;
+
+use PDO;
+
 class CommentaireManager
 {
     private $db;
@@ -14,13 +18,19 @@ class CommentaireManager
     }
 
     public function getById($id) {
-        $query = $this->db->query("SELECT id, contenu, valide, ko_1 as koFirst, ko_2 as koSecond FROM commentaires WHERE id = $id");
+        $query = $this->db->query("SELECT id, contenu, valide, ko_1 as koFirst, ko_2 as koSecond FROM commentaires WHERE id = '$id'");
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function get(int $numComment) {
+        $query = $this->db->query("SELECT id, contenu, valide, ko_1 as koFirst, ko_2 as koSecond FROM commentaires LIMIT 1 OFFSET $numComment");
         $result = $query->fetch(PDO::FETCH_ASSOC);
         return $result;
     }
 
     public function getLabels($id) {
-        $query = $this->db->query("SELECT label FROM labels WHERE id_comment = $id");
+        $query = $this->db->query("SELECT label FROM labels WHERE id_comment = '$id'");
         $results = $query->fetchAll();
         foreach($results as $result){
             $labels[] = $result['label'];
